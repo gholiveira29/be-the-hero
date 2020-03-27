@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Link} from 'react-router-dom';
+import { Link, useHistory} from 'react-router-dom';
 import { FiArrowLeft} from 'react-icons/fi'
 
 import api from '../../services/api';
@@ -8,12 +8,14 @@ import './styles.css';
 import logoImg from '../../assets/logo.svg';
 
 export default function Register() {
-    const [name, setName] = useState(' ');
-    const [email, setEmail] = useState(' ');
-    const [Whatsapp, setWatsapp] = useState(' ');
-    const [city, setCity] = useState(' ');
-    const [uf, setUf] = useState(' ');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [whatsapp, setWatsapp] = useState('');
+    const [city, setCity] = useState('');
+    const [uf, setUf] = useState('');
 
+
+    const hitory = useHistory()
 
 
 async function handleRegister(e){
@@ -22,7 +24,7 @@ async function handleRegister(e){
     const data = {
         name,
         email,
-        Whatsapp,
+        whatsapp,
         city,
         uf,
     };
@@ -30,6 +32,9 @@ async function handleRegister(e){
     try{
         const response = await  api.post('ongs', data)
         alert(`Seu ID de acesso: ${response.data.id}`);
+
+            hitory.push('/')
+
     }catch (err){
         alert('Erro no cadastro, tente novamente.')
     }
@@ -57,15 +62,14 @@ async function handleRegister(e){
                         value={name}
                         onChange={e => setName(e.target.value)}
                     />
-                    <input 
-                    type="email" 
+                    <input type="email" 
                     placeholder="E-mail"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     />
                     <input 
                     placeholder="WhatsApp"
-                    value={Whatsapp}
+                    value={whatsapp}
                     onChange={e => setWatsapp(e.target.value)}
                     />
 
